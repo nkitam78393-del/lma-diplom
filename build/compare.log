@@ -1,0 +1,29 @@
+LMA 2.1 — Linux Memory Analyzer (дипломная версия)
+-- сравнение критериев Cross-View Validation ---------------------------------
+Критерий                                              Срабатываний
+Курсовой проект: разность множеств PID                           2
+Диплом: TID == PID и EXIT_STATE = TASK_RUNNING                   1
+
+Отбраковано уточнённым критерием:
+  потоки (TID != PID)             : 6
+  завершённые (EXIT_ZOMBIE/DEAD)  : 1
+  присутствуют в pslist           : 9
+
+Критерий              TP  FP  FN  Precision   Recall     F1
+наивный (курсовой)     1   1   0        0.5      1.0  0.667
+уточнённый (диплом)    1   0   0        1.0      1.0    1.0
+-- контекстное подавление ложных срабатываний эвристик bash ------------------
+Режим                                     Срабатываний
+Без контекстного фильтра (курсовой)                 10
+С контекстным фильтром (диплом)                      7
+  без фильтра    precision=0.7  recall=1.0  F1=0.824
+  с фильтром     precision=1.0  recall=1.0  F1=1.0
+
+Подавленные срабатывания:
+  $ wget https://archive.ubuntu.com/ubuntu/pool/main/v/vim/vim_9.1.0-1ubuntu1_amd64.deb
+    → загрузка из доверенного репозитория (archive.ubuntu.com)
+  $ chmod +x ./configure
+    → выдача прав в контексте сборки/скрипта проекта
+  $ curl https://raw.githubusercontent.com/volatilityfoundation/volatility3/master/README.md
+    → загрузка из доверенного репозитория (raw.githubusercontent.com)
+

