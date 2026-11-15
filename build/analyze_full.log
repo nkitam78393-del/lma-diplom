@@ -1,0 +1,56 @@
+LMA 2.1 — Linux Memory Analyzer (дипломная версия)
+-- исследуемый образ ---------------------------------------------------------
+    build/lab/memory_lab.raw  (128.0 MiB)
+    режим артефактов: фикстуры build/lab/plugins   режим YARA: hybrid
+[1/9] идентификация версии ядра по сырому образу
+[+] ядро определено: 6.17.0-19-generic (баннеров: 6/7, достоверность 0.852, смещение 0x1000)
+    прочие версии-кандидаты: 5.15.0-25-generic×1
+[2/9] подготовка таблицы символов ISF
+    режим фикстур: построение слоёв трансляции не требуется
+[3/9] извлечение артефактов (pslist, psscan, bash, malfind)
+    процессов: 9  task_struct: 17  команд: 14  областей-кандидатов: 4
+      linux.pslist                     9 записей   0.001 с  [fixture]
+      linux.psscan                    17 записей     0.0 с  [fixture]
+      linux.bash                      14 записей     0.0 с  [fixture]
+      linux.malware.malfind            4 записей     0.0 с  [fixture]
+[4/9] перекрёстная проверка артефактов
+    скрытых процессов (уточнённый критерий): 1  4242
+    отбраковано: потоков 6, завершённых задач 1
+    наивный критерий курсовой: 2 срабатываний (ложных 1)
+    подозрительных команд: 7 (подавлено контекстом: 3)
+    правил YARA загружено: 12 из 3 файлов
+[5/9] энтропийная предфильтрация областей и сигнатуры по областям
+    областей всего: 4, отобрано для YARA: 2, отсеяно предфильтром: 2
+    областей: 4 → отобрано 2, отсеяно 2; объём сканирования сокращён на 40.0 %
+      PID 4242 0x7f0000000000 H=7.999  packed_or_encrypted  YARA: Linux_Injection_Shellcode_Socket_x64, Linux_Injection_Shellcode_Socket_x64, Linux_Injection_Shellcode_Socket_x64, Linux_Injection_Shellcode_Socket_x64, Linux_Injection_Shellcode_Socket_x64, Linux_Injection_Shellcode_Socket_x64
+      PID 4242 0x7f0000300000 H=7.996  packed_or_encrypted  YARA: Linux_Injection_ELF_Header_In_Anon_VMA, Linux_Injection_Packed_High_Entropy, Linux_Injection_Packed_High_Entropy
+[6/9] сигнатурное сканирование (режим hybrid)
+    полный образ: 0.251 с, 510.0 МиБ/с, находок 20, атрибутировано процессам 20
+    итого находок: 29  по категориям: {'malware': 22, 'secrets': 7}
+    по критичности: {'critical': 13, 'high': 11, 'medium': 5}
+[7/9] репутационная проверка хешей извлечённых объектов
+    44439b744f11affe09365283…  malicious   Lab.Loader.Shellcode     [local_reference_list/query]
+    a5193f5c7adbf4c57b72d7ff…  suspicious  Lab.Packed.UPX           [local_reference_list/query]
+[8/9] построение хронологии инцидента (timeline)
+    событий: 57  по типам: срабатывание YARA: 29, создание процесса: 9, команда bash: 14, инъекция в память: 2, репутация хеша: 2, скрытый процесс (DKOM): 1
+    окно наблюдения: 2026-11-14T19:55:00+00:00 … 2026-11-14T20:16:31+00:00
+    критических событий: 17
+      2026-11-14T19:55:00+00:00  bash: Linux_Malware_Reverse_Shell (MITRE T1059.004), смещение 0x100043
+      2026-11-14T20:14:41+00:00  bash: подозрительная команда: обратная оболочка через /dev/tcp
+      —  kworker/u8:3: packed_or_encrypted: энтропия 7.999 ≥ 7.2: упакованная/шифрованная нагрузка
+      —  kworker/u8:3: хеш 44439b744f11affe… — malicious (Lab.Loader.Shellcode, local_reference_list)
+      —  [СКРЫТЫЙ] kworker/u8:3: TID 4242 == PID, EXIT_STATE TASK_RUNNING, задача отсутствует в pslist, task_stru
+[9/9] оценка качества детектирования и формирование отчёта
+    детектор                            TP  FP  FN       P       R      F1
+    Скрытые процессы (DKOM)              1   0   0     1.0     1.0     1.0
+    Эвристики истории bash               7   0   0     1.0     1.0     1.0
+    Сигнатуры YARA                      12   0   0     1.0     1.0     1.0
+    Инъекции (malfind + энтропия)        2   0   0     1.0     1.0     1.0
+    ИТОГО                               22   0   0     1.0     1.0     1.0
+    контрольные «чистые» двойники: 6, ложно помечено: 0
+-- готово --------------------------------------------------------------------
+    TXT   build/report_full.txt
+    JSON  build/report_full.json
+    HTML  build/report_full.html
+    суммарное время конвейера: 0.491 с
+
