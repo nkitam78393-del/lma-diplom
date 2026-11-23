@@ -1,0 +1,6 @@
+[+] Стенд развёрнут: build/lab
+    образ памяти      : build/lab/memory_lab.raw (128 МиБ)
+    фикстуры плагинов : build/lab/plugins (pslist 9, psscan 17, bash 14, malfind 4)
+    эталонная разметка: build/lab/ground_truth.json
+    справочник хешей  : build/lab/reference_hashes.txt
+

