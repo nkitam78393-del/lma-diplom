@@ -12,12 +12,17 @@
   %H1  — заголовок раздела (полужирный)
   %TR  — подпись таблицы, выкл. вправо
   %TBL1/%TBL2/%TBL3 — плейсхолдер таблицы (данные ниже)
+  %FIG <путь> — рисунок (PNG, по центру; ширина 16 см, высота по пропорции)
+  %FC  — подрисуночная подпись, по центру, 12 кегль
+  %CB  — центрированная полужирная строка (ФИО авторов)
 """
 import sys
 import os
 
-SRC = "/workspace/article_src.md"
+from PIL import Image  # pillow — для размеров PNG при расчёте EMU
+
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+SRC = os.path.join(ROOT, "tools", "article_src.md")
 sys.path.insert(0, ROOT)
 OUT = os.path.join(ROOT, "docs", "Статья_Михалёв_ИИ_2026.docx")
 import docx_lib as dl
@@ -85,6 +90,29 @@ def placeholder(line):
     return line if line in TABLES else None
 
 
+EMU_PER_CM = 360000
+FIG_WIDTH_CM = 16.0  # ширина рисунков в тексте (полоса набора 17 см)
+media = []           # [(rid, filename, data)] — собирается при обработке %FIG
+
+
+def figure_xml(relpath):
+    """XML inline-картинки шириной FIG_WIDTH_CM и media-запись для save()."""
+    path = os.path.join(ROOT, relpath)
+    with Image.open(path) as im:
+        w_px, h_px = im.size
+    cx = int(FIG_WIDTH_CM * EMU_PER_CM)
+    cy = int(cx * h_px / w_px)
+    n = len(media) + 1
+    rid = "rId%d" % (100 + n)
+    doc_pr_id = 200 + n
+    filename = "fig%d.png" % n
+    with open(path, "rb") as f:
+        media.append((rid, filename, f.read()))
+    print("Рисунок: %s -> %s, %d x %d px = %.1f x %.1f см"
+          % (relpath, filename, w_px, h_px, FIG_WIDTH_CM, FIG_WIDTH_CM * h_px / w_px))
+    return dl.pic(rid=rid, cx=cx, cy=cy, doc_pr_id=doc_pr_id, name=filename)
+
+
 def build():
     with open(SRC, encoding="utf-8") as f:
         lines = f.read().split("\n")
@@ -108,6 +136,13 @@ def build():
             body.append(dl.p(line[4:], bold=True, align="center", first=0, before=200, after=100))
         elif line.startswith("%C "):
             body.append(dl.p(line[3:], align="center", first=0))
+        elif line.startswith("%CB "):
+            body.append(dl.p(line[4:], bold=True, align="center", first=0))
+        elif line.startswith("%FIG "):
+            body.append(figure_xml(line[5:].strip()))
+        elif line.startswith("%FC "):
+            body.append(dl.p(line[4:], align="center", sz=24, first=0,
+                             before=120, after=200))
         elif line == "%SP":
             body.append(dl.p("", first=0, line=240))
         elif line.startswith("%TR "):
@@ -139,7 +174,7 @@ def main():
 
     out_path = os.path.abspath(OUT)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    dl.save(out_path, body, title="Научная статья для конференции «ИИ-2026»")
+    dl.save(out_path, body, title="Научная статья для конференции «ИИ-2026»", media=media)
     print("Сохранено:", out_path)
 
     # Грубая оценка объёма: символов основного текста
